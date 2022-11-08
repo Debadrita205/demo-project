@@ -23,7 +23,7 @@ export const LoginStyles = StyleSheet.create({
         color: '#0d438f',
         fontWeight: '400',
         fontSize: 16,
-        marginTop: 10,
+        marginBottom: 10,
     },
     textInputStyle: {
         color: '#000',
@@ -37,7 +37,7 @@ export const LoginStyles = StyleSheet.create({
     },
     animatedInputContainer: {
         width: '98%',
-        paddingTop: 35,
+        paddingTop: 20,
     },
     resetPasswordText: {
         color: '#000',

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {apiStatus, LoginProps, LoginState} from './types';
-import {showMessage} from 'react-native-flash-message';
+// import {showMessage} from 'react-native-flash-message';
 
 const initialState: LoginState = {
     status: apiStatus.idle,
@@ -44,18 +44,18 @@ export const LoginSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.status = apiStatus.success;
                 state.userDetails = action.payload;
-                showMessage({
-                    message: 'You have logged in successfully!',
-                    type: 'success',
-                });
+                // showMessage({
+                //     message: 'You have logged in successfully!',
+                //     type: 'success',
+                // });
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = apiStatus.failed;
-                showMessage({
-                    message:
-                        'Either the username or password that you entered were incorrect.',
-                    type: 'danger',
-                });
+                // showMessage({
+                //     message:
+                //         'Either the username or password that you entered were incorrect.',
+                //     type: 'danger',
+                // });
                 __DEV__ && console.log('error login: ', action.error);
             });
     },

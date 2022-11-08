@@ -1,11 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text} from 'react-native';
 import React from 'react';
 import {DashboardStyles, LoginStyles} from './styles';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
-import {ButtonComponent} from '../components';
 import * as Routes from '../utils/Routes';
 import {DashboardProps} from './types';
 import {resetLogin} from '../redux/slice/LoginSlice';
+import {Button} from '@react-native-material/core';
 
 const DashboardScreen = ({navigation}: DashboardProps) => {
     const dispatch = useAppDispatch();
@@ -18,11 +19,15 @@ const DashboardScreen = ({navigation}: DashboardProps) => {
                     Welcome, {userDetails.firstName}
                 </Text>
                 <View style={LoginStyles.buttonContainer}>
-                    <ButtonComponent
-                        backgroundColor={'#0d438f'}
-                        textColor={'#fff'}
+                    <Button
+                        style={{
+                            backgroundColor: '#0d438f',
+                        }}
+                        titleStyle={{
+                            color: '#fff',
+                        }}
                         title={'Logout'}
-                        onPressed={() => {
+                        onPress={() => {
                             dispatch(resetLogin());
                             navigation.navigate(Routes.LoginScreen);
                         }}
