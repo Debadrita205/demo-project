@@ -6,6 +6,11 @@ export type LoginProps = NativeStackScreenProps<
     'LoginScreen'
 >;
 
+export type RegistrationProps = NativeStackScreenProps<
+    RootStackParamList,
+    'RegistrationScreen'
+>;
+
 export type DashboardProps = NativeStackScreenProps<
     RootStackParamList,
     'DashboardScreen'

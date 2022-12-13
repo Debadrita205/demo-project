@@ -1,40 +1,82 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text} from 'react-native';
-import React from 'react';
-import {DashboardStyles, LoginStyles} from './styles';
+import {RefreshControl} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
-import * as Routes from '../utils/Routes';
-import {DashboardProps} from './types';
-import {resetLogin} from '../redux/slice/LoginSlice';
-import {Button} from '@react-native-material/core';
+import {fetchUserDetails, resetDashboard} from '../redux/slice/DashboardSlice';
+import {FlatList} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Colors} from '../styles';
 
-const DashboardScreen = ({navigation}: DashboardProps) => {
+import {setFavorite} from '../redux/slice/FavoriteSlice';
+import {apiStatus} from '../redux/slice/types';
+import {Loader, RenderProfile} from '../components';
+
+const DashboardScreen = () => {
+    const refreshing = useState(false)[0];
+    const [page, setPage] = useState(10);
+    const [onEndReached, setOnEndReached] = useState(false);
+
     const dispatch = useAppDispatch();
-    const userDetails = useAppSelector(state => state.userLogin.userDetails);
+    const userDetails = useAppSelector(state => state.userDetails.userDetails);
+    const status = useAppSelector(state => state.userDetails.status);
+
+    useEffect(() => {
+        dispatch(fetchUserDetails(page));
+    }, [dispatch, page]);
+
+    const onRefresh = () => {
+        dispatch(resetDashboard());
+        dispatch(fetchUserDetails(page));
+    };
+
+    const loadMore = () => {
+        console.log('load more data');
+        if (userDetails.length !== 0 && !onEndReached) {
+            dispatch(fetchUserDetails(page + 10));
+            setPage(pre => pre + 10);
+            setOnEndReached(true);
+        }
+    };
+
+    const onSelectFavorite = (user: {
+        [key: string]: string | {[key: string]: string};
+    }) => {
+        dispatch(setFavorite(user));
+    };
 
     return (
-        <View style={LoginStyles.screen}>
-            <View style={DashboardStyles.page}>
-                <Text style={{fontSize: 20, color: '#000', fontWeight: 'bold'}}>
-                    Welcome, {userDetails.firstName}
-                </Text>
-                <View style={LoginStyles.buttonContainer}>
-                    <Button
-                        style={{
-                            backgroundColor: '#0d438f',
-                        }}
-                        titleStyle={{
-                            color: '#fff',
-                        }}
-                        title={'Logout'}
-                        onPress={() => {
-                            dispatch(resetLogin());
-                            navigation.navigate(Routes.LoginScreen);
-                        }}
+        <SafeAreaView edges={['top']} style={{flex: 1}}>
+            <FlatList
+                data={userDetails}
+                renderItem={({item, index}) => (
+                    <RenderProfile
+                        index={index}
+                        item={item}
+                        onPress={user => onSelectFavorite(user)}
                     />
-                </View>
-            </View>
-        </View>
+                )}
+                refreshControl={
+                    <RefreshControl
+                        title="Pull to refresh"
+                        tintColor={Colors.BlackColor}
+                        titleColor={Colors.BlackColor}
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+                onEndReachedThreshold={0.01}
+                onEndReached={loadMore}
+                onMomentumScrollBegin={() => setOnEndReached(false)}
+                maxToRenderPerBatch={10}
+                removeClippedSubviews={true}
+                initialNumToRender={10}
+                windowSize={30}
+                keyExtractor={item => item.login.uuid}
+            />
+            {status === apiStatus.loading && (
+                <Loader color={Colors.AppBackgroundColor} />
+            )}
+        </SafeAreaView>
     );
 };
 

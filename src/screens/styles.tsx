@@ -1,9 +1,11 @@
 import {Platform, StyleSheet} from 'react-native';
+import {Colors} from '../styles';
+import Dimension from '../utils/Dimension';
 
 export const LoginStyles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#5ec8e6',
+        backgroundColor: Colors.WhiteColor,
     },
     loginContainer: {
         paddingHorizontal: 15,
@@ -53,14 +55,16 @@ export const LoginStyles = StyleSheet.create({
     },
     buttonWrapper: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
-export const DashboardStyles = StyleSheet.create({
+export const FavoriteStyles = StyleSheet.create({
     page: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: Dimension(10),
     },
 });

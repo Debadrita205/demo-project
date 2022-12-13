@@ -13,9 +13,9 @@ import * as Routes from '../utils/Routes';
 
 import {useAppSelector} from '../redux/hooks';
 import {apiStatus} from '../redux/slice/types';
-import {LoginProps} from './types';
+import {RegistrationProps} from './types';
 
-const RegistrationScreen = ({navigation}: LoginProps) => {
+const RegistrationScreen = ({navigation}: RegistrationProps) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [first, setFirst] = useState('');

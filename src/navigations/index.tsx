@@ -3,11 +3,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screens from '../screens';
 import * as Routes from '../utils/Routes';
+import TabNavigation from './bottomTabNavigation';
 
 export type RootStackParamList = {
     [Routes.LoginScreen]: undefined;
     [Routes.RegistrationScreen]: undefined;
-    [Routes.DashboardScreen]: undefined;
+    [Routes.Tab]: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -27,8 +28,8 @@ const RootNavigation: React.FC = () => {
                     options={{headerShown: false}}
                 />
                 <RootStack.Screen
-                    name={Routes.DashboardScreen}
-                    component={Screens.DashboardScreen}
+                    name={Routes.Tab}
+                    component={TabNavigation}
                     options={{headerShown: false}}
                 />
             </RootStack.Navigator>
