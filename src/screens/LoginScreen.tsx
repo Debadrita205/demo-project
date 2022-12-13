@@ -48,7 +48,7 @@ const LoginScreen = ({navigation}: LoginProps) => {
             <View style={LoginStyles.screen}>
                 <View style={LoginStyles.loginContainer}>
                     <View style={LoginStyles.headerTextContainer}>
-                        <Text variant={'h4'}>CS Tutor Login</Text>
+                        <Text variant={'h4'}>User Login</Text>
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <View style={LoginStyles.animatedInputContainer}>
